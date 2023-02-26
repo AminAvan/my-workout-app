@@ -1,4 +1,5 @@
 from flask import Flask, flash, render_template, url_for, redirect, request
+import os
 # we use sql for our application with SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
@@ -39,6 +40,8 @@ from mpmath import *
 # that is pay with the student-plan of heroku. Therefore, we need to have the url of the database to plugin it to our code.
 # to get the url of database, write "heroku config --app exlive" in terminal, then copy the "DATABASE_URL"
 
+# Get the port number from the environment(e.g., heroku) variable, or use a default value
+port = int(os.environ.get('PORT', 5000))
 
 # we have a user table that stores users information (username, password)
 # we create a database with a file named "database.db", in order to connect to the "database.db", we need to use SQLAlchemy
@@ -220,4 +223,4 @@ def user_signout():
     return redirect(url_for('user_signin'))
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=port)
