@@ -25,7 +25,16 @@ from mpmath import *
 # Then, we need to put those modules names to a text file to notice the Heroku that which python-modules we use.
 # As a result, we put all these python-modules in a text-file with "pip freeze > requirement.txt"
 # Further, we need a "procfile", which tells Heroku that what kind of app is runing (i.e., a web app), so to do that we need to 
-# write "" in terminal
+# write "echo web: gunicorn app:app > procfile" in terminal, then it produce a file named "procfile"
+# In addition, I need to push my code to the Github and then from github push them to Heroku. Therefore, the first step is to push the code to the github.
+# So, after creating a repsitory on github with a name, copy the "https://github.com/AminAvan/my-workout-app.git" repo.
+# Next, write "git remote add origin https://github.com/AminAvan/my-workout-app.git" in the terminal.
+# next, to check the repo is added correctly we use "git remote -v"
+# next, write "git push origin master" in the terminal to push the code
+# in addition, we create an app on heroku with "heroku create exlive"
+# in addition, before pushing the code of program we need to define the database of the app on heroku.
+# so we want a postgres, let's install it on heroku and apply changes to our code "app"
+
 
 
 # we have a user table that stores users information (username, password)
