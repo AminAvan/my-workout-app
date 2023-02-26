@@ -1,0 +1,3 @@
+home_page.html -> 1:
+In the "...", you need to write the name of the function (e.g., def user_signin():) in the "..." in {{url_for('...')}}".
+Therefore, you do not need to write manually the url of the page when using "url_for"

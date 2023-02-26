@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BMI calculator of ExLive</title>
+</head>
+
+
+<body>
+    <h1>ExLive - Body Mass Index (BMI) calculator:</h1>
+    <form method="post" action="">
+        {{form.hidden_tag() }}
+        {{form.user_weight }}
+        {{form.user_height }}
+        {{form.claculate_user_bmi }}
+    </form>
+    {% for message in get_flashed_messages() %}
+        <span style="color: green;">{{ message }}</span>
+    {% endfor %}
+</body>
+</html>

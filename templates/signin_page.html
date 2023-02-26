@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Sign-in Page of ExLive</title></head>
+
+<body>
+    <h1>ExLive - Sign in:</h1>
+
+    <form method="post" action="">
+        {{form.hidden_tag() }}
+        {{form.username }}
+        {{form.password }}
+        {{form.submit }}
+    </form>
+    {% for message in get_flashed_messages() %}
+        <span style="color: red;">***{{ message }}***</span>
+    {% endfor %}
+    <p><a href="{{url_for('user_signup')}}">Are you a new user? please "sign up"</a></p>    
+</body>
+</html>
