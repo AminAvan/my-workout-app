@@ -52,7 +52,7 @@ app = Flask(__name__)
 # we need to connect our app to postgres database as we want to deploy app on heroku
 # therefore, "postgres://tcwgureblapxwo:6b845ecaf0926b7929062c0ecf602ae16a5d74b8a390c150bdea759a341ea81d@ec2-18-214-134-226.compute-1.amazonaws.com:5432/d2325b3q1sbvjl"
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' change to
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://tcwgureblapxwo:6b845ecaf0926b7929062c0ecf602ae16a5d74b8a390c150bdea759a341ea81d@ec2-18-214-134-226.compute-1.amazonaws.com:5432/d2325b3q1sbvjl'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://tcwgureblapxwo:6b845ecaf0926b7929062c0ecf602ae16a5d74b8a390c150bdea759a341ea81d@ec2-18-214-134-226.compute-1.amazonaws.com:5432/d2325b3q1sbvjl'
 # create a database instance
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
