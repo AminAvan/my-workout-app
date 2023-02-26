@@ -31,10 +31,13 @@ from mpmath import *
 # Next, write "git remote add origin https://github.com/AminAvan/my-workout-app.git" in the terminal.
 # next, to check the repo is added correctly we use "git remote -v"
 # next, write "git push origin master" in the terminal to push the code
-# in addition, we create an app on heroku with "heroku create exlive"
+# in addition, we create an app on heroku with "heroku create exlive" --> our app-name is exlive
+# in addition, to apply changes on files on github we need to -> "git add -A" -> "git commit -m "comments"" --> "git push origin master"
 # in addition, before pushing the code of program we need to define the database of the app on heroku.
 # so we want a postgres, let's install it on heroku and apply changes to our code "app"
-
+# to install "postgres", "heroku addons:create heroku-postgresql:mini --app app_name" (app_name: exlive) in terminal , mini cost 5$ 
+# that is pay with the student-plan of heroku. Therefore, we need to have the url of the database to plugin it to our code.
+# to get the url of database, write "heroku config --app exlive" in terminal, then copy the "DATABASE_URL"
 
 
 # we have a user table that stores users information (username, password)
@@ -43,7 +46,10 @@ from mpmath import *
 # create a web instance
 app = Flask(__name__)
 # we need to connect our app file "db = SQLAlchemy(app)" to the file "database.db"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+# we need to connect our app to postgres database as we want to deploy app on heroku
+# therefore, "postgres://tcwgureblapxwo:6b845ecaf0926b7929062c0ecf602ae16a5d74b8a390c150bdea759a341ea81d@ec2-18-214-134-226.compute-1.amazonaws.com:5432/d2325b3q1sbvjl"
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' change to
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://tcwgureblapxwo:6b845ecaf0926b7929062c0ecf602ae16a5d74b8a390c150bdea759a341ea81d@ec2-18-214-134-226.compute-1.amazonaws.com:5432/d2325b3q1sbvjl'
 # create a database instance
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
