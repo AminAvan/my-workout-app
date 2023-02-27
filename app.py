@@ -242,6 +242,7 @@ def user_fitness_program():
         flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". Therefore, we recommend program named \"{sug_prog}\" for you and will send it to your email."), 'res_user_fitness_program')
         print(sug_prog)
         print(user_email)
+        print(type(user_email))
 
         # send email
         # with smtplib.SMTP(smtp_server, mailtrap_port) as server:
