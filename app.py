@@ -20,7 +20,7 @@ from mpmath import *
 # enable the app for sending the workout-programs to users' email
 import smtplib
 from email.mime.text import MIMEText
-#import requests
+import requests
 
 # locally we have a local development server running, but when we want to run our app on "Heroku" we need a professional webserver to run.
 # Therefore, we install "gunicorn" -> pip install gunicorn
