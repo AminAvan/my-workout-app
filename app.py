@@ -236,18 +236,18 @@ def user_fitness_program():
         sug_prog = str(db.session.execute(text(f"SELECT programname FROM fitnessprograms WHERE excersiegoal = '{user_resp_to_fit_programs}'")).scalar())
         user_email = request.form['email']
 
-        # receiver_email = user_email
-        # msg['To'] = receiver_email
+        receiver_email = user_email
+        msg['To'] = receiver_email
 
         flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". Therefore, we recommend program named \"{sug_prog}\" for you and will send it to your email."), 'res_user_fitness_program')
         print(sug_prog)
         print(user_email)
         print(type(user_email))
 
-        # send email
-        # with smtplib.SMTP(smtp_server, mailtrap_port) as server:
-        #     server.login(mailtrap_username, mailtrap_password)
-        #     server.sendmail(sender_email, receiver_email, msg.as_string())
+        send email
+        with smtplib.SMTP(smtp_server, mailtrap_port) as server:
+            server.login(mailtrap_username, mailtrap_password)
+            server.sendmail(sender_email, receiver_email, msg.as_string())
 
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
