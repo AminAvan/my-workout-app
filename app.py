@@ -154,9 +154,9 @@ def user_signin():
                 login_user(user)
                 return redirect(url_for('user_dashboard'))
             else:
-                flash ("The written password is not correct, please try again!")
+                flash (('The written password is not correct, please try again!'), 'sign_in_alerts')
         else:
-            flash ("The written username and password does not exist, please sign up!")
+            flash (('The written username and password does not exist, please sign up!'), 'sign_in_alerts')
 
     return render_template('signin_page.html', form=form)
 
