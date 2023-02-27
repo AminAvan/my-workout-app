@@ -14,7 +14,7 @@ from flask_bcrypt import Bcrypt
 # to create a number for two-factor-authentication
 import pyotp
 # to send email
-from flask_mail import Mail
+from flask_mail import Mail, Message
 # for calculation
 from mpmath import *
 # enable the app for sending the workout-programs to users' email
@@ -67,12 +67,12 @@ bcrypt = Bcrypt(app)
 # I just write a simple sentence here
 app.config['SECRET_KEY'] = 'secretkeyvalue'
 # initialize our mail, we give "app" to "Mail" class as an argument
-# app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
-# app.config['MAIL_PORT'] = 2525
-# app.config['MAIL_USERNAME'] = 'abca5dc8c50d56'
-# app.config['MAIL_PASSWORD'] = 'b1faed52fef953'
-# app.config['MAIL_USE_TLS'] = True
-# app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'aminotutest@gmail.com'
+app.config['MAIL_PASSWORD'] = '13721372'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
 
 
@@ -247,9 +247,9 @@ def user_fitness_program():
         # with smtplib.SMTP(smtp_server, mailtrap_port) as server:
         #     server.login(mailtrap_username, mailtrap_password)
         #     server.sendmail(sender_email, receiver_email, msg.as_string())
-        # msg = Message('Hello from the other side!', sender =   'peter@mailtrap.io', recipients = ['paul@mailtrap.io'])
-        # msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
-        # mail.send(msg)
+        msg = Message('Hello from the other side!', sender = 'aminotutest@gmail.com', recipients = [user_email])
+        msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
+        mail.send(msg)
 
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
