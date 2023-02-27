@@ -17,6 +17,9 @@ import pyotp
 from flask_mail import Mail
 # for calculation
 from mpmath import *
+# enable the app for sending the workout-programs to users' email
+import smtplib
+from email.mime.text import MIMEText
 
 # locally we have a local development server running, but when we want to run our app on "Heroku" we need a professional webserver to run.
 # Therefore, we install "gunicorn" -> pip install gunicorn
@@ -206,12 +209,34 @@ def user_bmi():
 def user_fitness_program():
     fit_programs=db.session.execute(text('select * from fitnessprograms order by excersiegoal'))
     if (request.method == 'POST'):
+        mailtrap_port = 2525
+        smtp_server = 'sandbox.smtp.mailtrap.io'
+        mailtrap_username = 'abca5dc8c50d56'
+        mailtrap_password = 'b1faed52fef953'
+        mailtrap_message = f"hi"
+
+        sender_email = '6b0b823e-a617-4022-8a04-a2f395bfcf2c@heroku.com'
+        msg = MIMEText(mailtrap_message, 'text')
+        msg['Subject'] = 'ExLive - Workout daily program'
+        msg['From'] = sender_email
+
+
         user_resp_to_fit_programs = str(request.form['fitprgrms'])
         sug_prog = str(db.session.execute(text(f"SELECT programname FROM fitnessprograms WHERE excersiegoal = '{user_resp_to_fit_programs}'")).scalar())
         user_email = request.form['email']
+
+        receiver_email = user_email
+        msg['To'] = receiver_email
+
         flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". Therefore, we recommend program named \"{sug_prog}\" for you and will send it to your email."), 'res_user_fitness_program')
         print(sug_prog)
         print(user_email)
+
+        # send email
+        with smtplib.SMTP(smtp_server, mailtrap_port) as server:
+            server.login(mailtrap_username, mailtrap_password)
+            server.sendmail(sender_email, receiver_email, msg.as_string())
+
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
 
