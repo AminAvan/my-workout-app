@@ -39,6 +39,8 @@ from mpmath import *
 # to install "postgres", "heroku addons:create heroku-postgresql:mini --app app_name" (app_name: exlive) in terminal , mini cost 5$ 
 # that is pay with the student-plan of heroku. Therefore, we need to have the url of the database to plugin it to our code.
 # to get the url of database, write "heroku config --app exlive" in terminal, then copy the "DATABASE_URL"
+# in addition, connect to the database, psql --host=ec2-18-214-134-226.compute-1.amazonaws.com --port=5432 --username=tcwgureblapxwo --password --dbname=d2325b3q1sbvjl
+# based on the information of sql in heroku
 
 # Get the port number from the environment(e.g., heroku) variable, or use a default value
 port = int(os.environ.get('PORT', 5000))
@@ -74,11 +76,11 @@ login_manager.login_view = "user_signin" # write the "signin" view function "def
 # define the "user_loader callback" function to reload user object from the user id stored in the session
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return usercredentials.query.get(int(user_id))
 
 
 # create a "user" table for checking/storing user information
-class User(db.Model, UserMixin):
+class usercredentials(db.Model, UserMixin):
     # id column
     id = db.Column(db.Integer, primary_key=True)
     # username column with 50 character capacity, "unique=True" is for that two or more user cannot have a same username
@@ -95,8 +97,8 @@ class RegisterForm(FlaskForm):
 
     # Although we wrote "unique=True" in database to have unique username, but we need to check it in the "RegisterForm"
     def validate_username(self, username):
-        # query the "User" database table for the inputed username to check if the written username is already exists
-        existing_user_name = User.query.filter_by(username=username.data).first()
+        # query the "usercredentials" database table for the inputed username to check if the written username is already exists
+        existing_user_name = usercredentials.query.filter_by(username=username.data).first()
         # if existing_user_name==TRUE, then the form raising the validation error like below
         if existing_user_name:
             raise ValidationError("The username already exists, please write a different username!")
@@ -135,7 +137,7 @@ def user_signin():
     form = LoginForm()
     # check the user exists in the database or not?
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = usercredentials.query.filter_by(username=form.username.data).first()
         # if the user exists in the database, we need to check the password hash
         if user:
             if bcrypt.check_password_hash(user.password, form.password.data):
@@ -156,7 +158,7 @@ def user_signup():
 
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data)
-        new_user = User(username=form.username.data, password=hashed_password)
+        new_user = usercredentials(username=form.username.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('user_signin'))
