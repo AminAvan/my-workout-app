@@ -215,10 +215,10 @@ def user_bmi():
 def user_fitness_program():
     fit_programs=db.session.execute(text('select * from fitnessprograms order by excersiegoal'))
     if (request.method == 'POST'):
-        # mailtrap_port = 2525
-        # smtp_server = 'smtp.mailtrap.io'
-        # mailtrap_username = 'abca5dc8c50d56'
-        # mailtrap_password = 'b1faed52fef953'
+        mailtrap_port = 2525
+        smtp_server = 'smtp.mailtrap.io'
+        mailtrap_username = 'abca5dc8c50d56'
+        mailtrap_password = 'b1faed52fef953'
         mailtrap_message = """
                             Hi,
                             Check out the new post on the Mailtrap blog:
@@ -244,7 +244,7 @@ def user_fitness_program():
         print(user_email)
         print(type(user_email))
 
-        send email
+        #send email
         with smtplib.SMTP(smtp_server, mailtrap_port) as server:
             server.login(mailtrap_username, mailtrap_password)
             server.sendmail(sender_email, receiver_email, msg.as_string())
