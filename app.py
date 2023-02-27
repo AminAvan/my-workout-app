@@ -20,6 +20,7 @@ from mpmath import *
 # enable the app for sending the workout-programs to users' email
 import smtplib
 from email.mime.text import MIMEText
+import requests
 
 # locally we have a local development server running, but when we want to run our app on "Heroku" we need a professional webserver to run.
 # Therefore, we install "gunicorn" -> pip install gunicorn
@@ -215,39 +216,45 @@ def user_bmi():
 def user_fitness_program():
     fit_programs=db.session.execute(text('select * from fitnessprograms order by excersiegoal'))
     if (request.method == 'POST'):
-        mailtrap_port = 2525
-        smtp_server = 'smtp.mailtrap.io'
-        mailtrap_username = '06d66d657a1edc'
-        mailtrap_password = 'd6369e5a3796c8'
-        mailtrap_message = """
-                            Hi,
-                            Check out the new post on the Mailtrap blog:
-                            SMTP Server for Testing: Cloud-based or Local?
-                            https://blog.mailtrap.io/2018/09/27/cloud-or-local-smtp-server/
-                            Feel free to let us know what content would be useful for you!"""
+        # mailtrap_port = 2525
+        # smtp_server = 'smtp.mailtrap.io'
+        # mailtrap_username = '06d66d657a1edc'
+        # mailtrap_password = 'd6369e5a3796c8'
+        # mailtrap_message = """
+        #                     Hi,
+        #                     Check out the new post on the Mailtrap blog:
+        #                     SMTP Server for Testing: Cloud-based or Local?
+        #                     https://blog.mailtrap.io/2018/09/27/cloud-or-local-smtp-server/
+        #                     Feel free to let us know what content would be useful for you!"""
 
-        sender_email = '5ce439e0-0796-4eeb-a9d4-48bb377598d5@heroku.com'
-        msg = MIMEText(mailtrap_message, "plain")
-        msg['Subject'] = 'ExLive - Workout daily program'
-        msg['From'] = sender_email
+        # sender_email = '5ce439e0-0796-4eeb-a9d4-48bb377598d5@heroku.com'
+        # msg = MIMEText(mailtrap_message, "plain")
+        # msg['Subject'] = 'ExLive - Workout daily program'
+        # msg['From'] = sender_email
 
 
         user_resp_to_fit_programs = str(request.form['fitprgrms'])
         sug_prog = str(db.session.execute(text(f"SELECT programname FROM fitnessprograms WHERE excersiegoal = '{user_resp_to_fit_programs}'")).scalar())
         user_email = request.form['email']
 
-        receiver_email = user_email
-        msg['To'] = receiver_email
+        # receiver_email = user_email
+        # msg['To'] = receiver_email
 
         flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". Therefore, we recommend program named \"{sug_prog}\" for you and will send it to your email."), 'res_user_fitness_program')
         print(sug_prog)
         print(user_email)
         print(type(user_email))
 
-        #send email
-        with smtplib.SMTP(smtp_server, mailtrap_port) as server:
-            server.login(mailtrap_username, mailtrap_password)
-            server.sendmail(sender_email, receiver_email, msg.as_string())
+        # #send email
+        # with smtplib.SMTP(smtp_server, mailtrap_port) as server:
+        #     server.login(mailtrap_username, mailtrap_password)
+        #     server.sendmail(sender_email, receiver_email, msg.as_string())
+        requests.post("https://api.mailgun.net/v3/sandboxc3fe58440daa454198bab3f3848a938b.mailgun.org/messages",
+		                auth=("api", "980259cf120e1f623d192e6f796381ce-15b35dee-a33fc07e"),
+		                data={"from": "mailgun@sandboxc3fe58440daa454198bab3f3848a938b.mailgun.org",
+			            "to": [f"{user_email}"],
+			            "subject": "heroku 10",
+			            "text": f"your program is f{sug_prog}!"})
 
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
