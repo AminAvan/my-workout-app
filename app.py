@@ -67,6 +67,12 @@ bcrypt = Bcrypt(app)
 # I just write a simple sentence here
 app.config['SECRET_KEY'] = 'secretkeyvalue'
 # initialize our mail, we give "app" to "Mail" class as an argument
+# app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
+# app.config['MAIL_PORT'] = 2525
+# app.config['MAIL_USERNAME'] = 'abca5dc8c50d56'
+# app.config['MAIL_PASSWORD'] = 'b1faed52fef953'
+# app.config['MAIL_USE_TLS'] = True
+# app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
 
 
@@ -209,38 +215,41 @@ def user_bmi():
 def user_fitness_program():
     fit_programs=db.session.execute(text('select * from fitnessprograms order by excersiegoal'))
     if (request.method == 'POST'):
-        mailtrap_port = 2525
-        smtp_server = 'smtp.mailtrap.io'
-        mailtrap_username = 'abca5dc8c50d56'
-        mailtrap_password = 'b1faed52fef953'
-        mailtrap_message = """\
-                            Hi,
-                            Check out the new post on the Mailtrap blog:
-                            SMTP Server for Testing: Cloud-based or Local?
-                            https://blog.mailtrap.io/2018/09/27/cloud-or-local-smtp-server/
-                            Feel free to let us know what content would be useful for you!"""
+        # mailtrap_port = 2525
+        # smtp_server = 'smtp.mailtrap.io'
+        # mailtrap_username = 'abca5dc8c50d56'
+        # mailtrap_password = 'b1faed52fef953'
+        # mailtrap_message = """\
+        #                     Hi,
+        #                     Check out the new post on the Mailtrap blog:
+        #                     SMTP Server for Testing: Cloud-based or Local?
+        #                     https://blog.mailtrap.io/2018/09/27/cloud-or-local-smtp-server/
+        #                     Feel free to let us know what content would be useful for you!"""
 
-        sender_email = 'mailtrap@example.com'
-        msg = MIMEText(mailtrap_message, "plain")
-        msg['Subject'] = 'ExLive - Workout daily program'
-        msg['From'] = sender_email
+        # sender_email = 'mailtrap@example.com'
+        # msg = MIMEText(mailtrap_message, "plain")
+        # msg['Subject'] = 'ExLive - Workout daily program'
+        # msg['From'] = sender_email
 
 
         user_resp_to_fit_programs = str(request.form['fitprgrms'])
         sug_prog = str(db.session.execute(text(f"SELECT programname FROM fitnessprograms WHERE excersiegoal = '{user_resp_to_fit_programs}'")).scalar())
         user_email = request.form['email']
 
-        receiver_email = user_email
-        msg['To'] = receiver_email
+        # receiver_email = user_email
+        # msg['To'] = receiver_email
 
         flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". Therefore, we recommend program named \"{sug_prog}\" for you and will send it to your email."), 'res_user_fitness_program')
         print(sug_prog)
         print(user_email)
 
         # send email
-        with smtplib.SMTP(smtp_server, mailtrap_port) as server:
-            server.login(mailtrap_username, mailtrap_password)
-            server.sendmail(sender_email, receiver_email, msg.as_string())
+        # with smtplib.SMTP(smtp_server, mailtrap_port) as server:
+        #     server.login(mailtrap_username, mailtrap_password)
+        #     server.sendmail(sender_email, receiver_email, msg.as_string())
+        # msg = Message('Hello from the other side!', sender =   'peter@mailtrap.io', recipients = ['paul@mailtrap.io'])
+        # msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
+        # mail.send(msg)
 
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
