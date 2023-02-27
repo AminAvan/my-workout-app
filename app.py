@@ -210,13 +210,18 @@ def user_fitness_program():
     fit_programs=db.session.execute(text('select * from fitnessprograms order by excersiegoal'))
     if (request.method == 'POST'):
         mailtrap_port = 2525
-        smtp_server = 'sandbox.smtp.mailtrap.io'
+        smtp_server = 'smtp.mailtrap.io'
         mailtrap_username = 'abca5dc8c50d56'
         mailtrap_password = 'b1faed52fef953'
-        mailtrap_message = f"<h3>hi</h3>"
+        mailtrap_message = """\
+                            Hi,
+                            Check out the new post on the Mailtrap blog:
+                            SMTP Server for Testing: Cloud-based or Local?
+                            https://blog.mailtrap.io/2018/09/27/cloud-or-local-smtp-server/
+                            Feel free to let us know what content would be useful for you!"""
 
-        sender_email = '6b0b823e-a617-4022-8a04-a2f395bfcf2c@heroku.com'
-        msg = MIMEText(mailtrap_message, 'html')
+        sender_email = 'mailtrap@example.com'
+        msg = MIMEText(mailtrap_message, "plain")
         msg['Subject'] = 'ExLive - Workout daily program'
         msg['From'] = sender_email
 
