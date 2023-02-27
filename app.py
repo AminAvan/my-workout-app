@@ -254,7 +254,7 @@ def user_fitness_program():
 		data={"from": "mailgun@exlive.tech",
 			"to": [f"{user_email}"],
 			"subject": "heroku",
-			"text": f"your program is {sug_prog}"})
+			"text": f"your workout program is {sug_prog}"})
 
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
