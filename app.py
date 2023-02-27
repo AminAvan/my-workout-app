@@ -213,10 +213,10 @@ def user_fitness_program():
         smtp_server = 'sandbox.smtp.mailtrap.io'
         mailtrap_username = 'abca5dc8c50d56'
         mailtrap_password = 'b1faed52fef953'
-        mailtrap_message = f"hi"
+        mailtrap_message = f"<h3>hi</h3>"
 
         sender_email = '6b0b823e-a617-4022-8a04-a2f395bfcf2c@heroku.com'
-        msg = MIMEText(mailtrap_message, 'text')
+        msg = MIMEText(mailtrap_message, 'html')
         msg['Subject'] = 'ExLive - Workout daily program'
         msg['From'] = sender_email
 
