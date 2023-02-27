@@ -67,12 +67,12 @@ bcrypt = Bcrypt(app)
 # I just write a simple sentence here
 app.config['SECRET_KEY'] = 'secretkeyvalue'
 # initialize our mail, we give "app" to "Mail" class as an argument
-app.config['MAIL_SERVER']='smtp.mailtrap.io'
-app.config['MAIL_PORT'] = 2525
-app.config['MAIL_USERNAME'] = '06d66d657a1edc'
-app.config['MAIL_PASSWORD'] = 'd6369e5a3796c8'
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
+# app.config['MAIL_SERVER']='smtp.mailtrap.io'
+# app.config['MAIL_PORT'] = 2525
+# app.config['MAIL_USERNAME'] = '06d66d657a1edc'
+# app.config['MAIL_PASSWORD'] = 'd6369e5a3796c8'
+# app.config['MAIL_USE_TLS'] = True
+# app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
 
 
@@ -217,8 +217,8 @@ def user_fitness_program():
     if (request.method == 'POST'):
         mailtrap_port = 2525
         smtp_server = 'smtp.mailtrap.io'
-        mailtrap_username = 'abca5dc8c50d56'
-        mailtrap_password = 'b1faed52fef953'
+        mailtrap_username = '06d66d657a1edc'
+        mailtrap_password = 'd6369e5a3796c8'
         mailtrap_message = """
                             Hi,
                             Check out the new post on the Mailtrap blog:
