@@ -249,9 +249,9 @@ def user_fitness_program():
         #     server.login(mailtrap_username, mailtrap_password)
         #     server.sendmail(sender_email, receiver_email, msg.as_string())
         requests.post(
-		"https://api.mailgun.net/v3/sandboxc3fe58440daa454198bab3f3848a938b.mailgun.org/messages",
+		"https://api.mailgun.net/v3/exlive.tech/messages",
 		auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
-		data={"from": "mailgun@sandboxc3fe58440daa454198bab3f3848a938b.mailgun.org",
+		data={"from": "mailgun@exlive.tech",
 			"to": [f"{user_email}"],
 			"subject": "heroku",
 			"text": f"your program is {sug_prog}"})
