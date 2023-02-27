@@ -59,7 +59,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://tcwgureblapxwo:6b845ecaf09
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 # to solve creating the tables we need to 
-# from web_server import app, db -> app.app_context().push() -> db.create_all() in our python environment
+# from app import app, db -> app.app_context().push() -> db.create_all() in our python environment
 # we need to build a secret_key to have a secure session cookie, in a production environment this should be a secret, but for simplicty in here
 # I just write a simple sentence here
 app.config['SECRET_KEY'] = 'secretkeyvalue'
@@ -86,7 +86,7 @@ class usercredentials(db.Model, UserMixin):
     # username column with 50 character capacity, "unique=True" is for that two or more user cannot have a same username
     username = db.Column(db.String(50), nullable=False, unique=True)
     # password column with 100 character capacity
-    password = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
 
 # create a signup form that consist of "username", "password", and "submit" button
 class RegisterForm(FlaskForm):
