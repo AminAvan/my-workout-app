@@ -195,17 +195,17 @@ def user_bmi():
         # rounding BMI in having only "2" decimal digits
         bmi = round(bmi,1)
         if (bmi < 18.5):
-            flash ((f"{current_user.username}; your BMI is {bmi}, it is considered \"underweight\"."), 'bmi_calc_response')
+            flash ((f"Dear {current_user.username}; your BMI is {bmi}, it is considered \"underweight\"."), 'bmi_calc_response')
         if ((bmi >= 18.5) and (bmi <= 24.9)):
-            flash ((f"{current_user.username}; your BMI is {bmi}, it is considered \"normal weight\"."), 'bmi_calc_response')
+            flash ((f"Dear {current_user.username}; your BMI is {bmi}, it is considered \"normal weight\"."), 'bmi_calc_response')
         if ((bmi >= 25) and (bmi <= 29.9)):
-            flash ((f"{current_user.username}; your BMI is {bmi}, it is considered \"overweight\"."), 'bmi_calc_response')
+            flash ((f"Dear {current_user.username}; your BMI is {bmi}, it is considered \"overweight\"."), 'bmi_calc_response')
         if ((bmi >= 30) and (bmi <= 34.9)):
-            flash ((f"{current_user.username}; your BMI is {bmi}, it is considered \"Obesity class 1\"."), 'bmi_calc_response')
+            flash ((f"Dear {current_user.username}; your BMI is {bmi}, it is considered \"Obesity class 1\"."), 'bmi_calc_response')
         if ((bmi >= 35) and (bmi <= 39.9)):
-            flash ((f"{current_user.username}; your BMI is {bmi}, it is considered \"Obesity class 2\"."), 'bmi_calc_response')
+            flash ((f"Dear {current_user.username}; your BMI is {bmi}, it is considered \"Obesity class 2\"."), 'bmi_calc_response')
         if (bmi >= 40):
-            flash ((f"{current_user.username}; your BMI is {bmi}, it is considered \"Obesity class 3\"."), 'bmi_calc_response')
+            flash ((f"Dear {current_user.username}; your BMI is {bmi}, it is considered \"Obesity class 3\"."), 'bmi_calc_response')
     return render_template('bmi_page.html', form=form)
 
 
