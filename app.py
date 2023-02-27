@@ -248,13 +248,13 @@ def user_fitness_program():
         # with smtplib.SMTP(smtp_server, mailtrap_port) as server:
         #     server.login(mailtrap_username, mailtrap_password)
         #     server.sendmail(sender_email, receiver_email, msg.as_string())
-        # requests.post(
-		# "https://api.mailgun.net/v3/sandboxc3fe58440daa454198bab3f3848a938b.mailgun.org/messages",
-		# auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
-		# data={"from": "mailgun@sandboxc3fe58440daa454198bab3f3848a938b.mailgun.org",
-		# 	"to": [f"{user_email}"],
-		# 	"subject": "hete 17",
-		# 	"text": f"your program is {sug_prog}"})
+        requests.post(
+		"https://api.mailgun.net/v3/sandboxc3fe58440daa454198bab3f3848a938b.mailgun.org/messages",
+		auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
+		data={"from": "mailgun@sandboxc3fe58440daa454198bab3f3848a938b.mailgun.org",
+			"to": [f"{user_email}"],
+			"subject": "heroku",
+			"text": f"your program is {sug_prog}"})
 
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
