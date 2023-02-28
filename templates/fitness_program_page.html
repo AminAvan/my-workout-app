@@ -27,7 +27,7 @@
     </form>
     {% with messages = get_flashed_messages(with_categories=true, category_filter='res_user_fitness_program') %}
         {% for category, message in messages %}
-            <pre style="color: green; background-color: lightyellow; border: 1px solid greenyellow; padding: 5px;">{{ message }}</pre>
+            <dive style="color: green; background-color: lightyellow; border: 1px solid greenyellow; padding: 5px;">{{ message }}</div>
         {% endfor %}
     {% endwith %}
     <p><a href="{{url_for('user_dashboard')}}">Dashboard</a></p>

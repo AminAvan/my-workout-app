@@ -220,12 +220,47 @@ def user_bmi():
 def user_fitness_program():
     fit_programs=db.session.execute(text('select * from fitnessprograms order by excersiegoal'))
     if (request.method == 'POST'):
+        sug_day = [] # for determining the user per day exercise
         user_resp_to_fit_programs = str(request.form['fitprgrms'])
         sug_prog = str(db.session.execute(text(f"SELECT programname FROM fitnessprograms WHERE excersiegoal = '{user_resp_to_fit_programs}'")).scalar())
+        if (sug_prog == 'Walk'):
+            sug_day[0] = 'Swimming or walk'
+            sug_day[1] = 'play basketball or walk'
+            sug_day[2] = 'play Volleyball or walk'
+            sug_day[3] = 'play Football or walk'
+            sug_day[4] = 'Swimming or walk'
+            sug_day[5] = 'Yoga or walk'
+            sug_day[6] = 'Pilates or walk'
+        elif (sug_prog == 'Full Body'):
+            sug_day[0] = 'Chest workouts'
+            sug_day[1] = 'Leg workouts'
+            sug_day[2] = 'Shoulder workouts'
+            sug_day[3] = 'Biceps workouts'
+            sug_day[4] = 'Triceps workouts'
+            sug_day[5] = 'UpperBody workouts'
+            sug_day[6] = 'LowerBody workouts'
+        elif (sug_prog == 'Run'):
+            sug_day[0] = 'Jogging for 45 miutes'
+            sug_day[1] = 'Running for 30 miutes'
+            sug_day[2] = 'Jogging for 45 miutes'
+            sug_day[3] = 'Running for 30 miutes'
+            sug_day[4] = 'Jogging for 45 miutes'
+            sug_day[5] = 'Running for 30 miutes'
+            sug_day[6] = 'Walk for 60 miutes'
+            
+        exercise_message = f"""Dear {current_user.username};
+        your selection is \"{user_resp_to_fit_programs}\".
+        Therefore, we recommend program named \"{sug_prog}\" for you and here it is:
+        Monday => \"{sug_day[0]}\".
+        Tuesday => \"{sug_day[1]}\".
+        Wednesday => \"{sug_day[2]}\".
+        Thursday => \"{sug_day[3]}\".
+        Friday => \"{sug_day[4]}\".
+        Saturday => \"{sug_day[5]}\".
+        Sunday => \"{sug_day[6]}\".
+        will send it to your email."""
 
-        flash ((f"""Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". \nTherefore, 
-                we recommend program named \"{sug_prog}\" for you and will send it to your email."""), 'res_user_fitness_program')
-        print(sug_prog)
+        flash (exercise_message, 'res_user_fitness_program')
 
         ## send email
         requests.post(
