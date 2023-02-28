@@ -220,7 +220,7 @@ def user_bmi():
 def user_fitness_program():
     fit_programs=db.session.execute(text('select * from fitnessprograms order by excersiegoal'))
     if (request.method == 'POST'):
-        sug_day = [] # for determining the user per day exercise
+        sug_day = [''] * 7 # for determining the user per day exercise _ for a week
         user_resp_to_fit_programs = str(request.form['fitprgrms'])
         sug_prog = str(db.session.execute(text(f"SELECT programname FROM fitnessprograms WHERE excersiegoal = '{user_resp_to_fit_programs}'")).scalar())
         if (sug_prog == 'Walk'):
