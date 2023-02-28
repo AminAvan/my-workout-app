@@ -260,7 +260,8 @@ def user_fitness_program():
         Friday => \"{sug_day[4]}\".
         Saturday => \"{sug_day[5]}\".
         Sunday => \"{sug_day[6]}\".
-        we will send a copy of this program to your email.
+        
+        We will send a copy of this program to your email.
         
         Regards,
         ExLive
