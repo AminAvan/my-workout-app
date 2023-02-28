@@ -23,9 +23,6 @@
             <option value="{{g.excersiegoal}}">{{g.excersiegoal}}</option>
             {% endfor %}
         </select>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
         <input type="submit" name="submit_button" value="Submit Request">
     </form>
     {% with messages = get_flashed_messages(with_categories=true, category_filter='res_user_fitness_program') %}
