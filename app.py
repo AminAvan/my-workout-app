@@ -8,7 +8,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 # to work with the class forms
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, validators, EmailField
-from wtforms.validators import InputRequired, Length, ValidationError, Email
+from wtforms.validators import InputRequired, Length, ValidationError, Email, DataRequired
 # to hash the users' passwords we use "bcrypt"
 from flask_bcrypt import Bcrypt
 # to create a number for two-factor-authentication
@@ -95,12 +95,15 @@ class usercredentials(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     # username column with 50 character capacity, "unique=True" is for that two or more user cannot have a same username
     username = db.Column(db.String(50), nullable=False, unique=True)
+    # email, the unique should enable as each user should has a unique email address
+    useremail = db.Column(db.String(255), nullable=False, unique=True)
     # password column with 100 character capacity
     password = db.Column(db.String(255), nullable=False)
 
 # create a signup form that consist of "username", "password", and "submit" button
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=50)], render_kw={"placeholder":"Username"})
+    useremail = StringField(validators=[InputRequired(), Email(), Length(min=5, max=50)], render_kw={"placeholder":"Email"})
     # Although I determined 100 character capacity for the password, we do not know how much character the hash function will produced.
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder":"Password"})
     submit = SubmitField("Register")
@@ -112,6 +115,14 @@ class RegisterForm(FlaskForm):
         # if existing_user_name==TRUE, then the form raising the validation error like below
         if existing_user_name:
             raise ValidationError("The username already exists, please write a different username!")
+    
+    # Although we wrote "unique=True" in database to have unique useremail, but we need to check it in the "RegisterForm"
+    def validate_useremail(self, useremail):
+        # query the "usercredentials" database table for the inputed useremail to check if the written useremail is already exists
+        existing_user_email = usercredentials.query.filter_by(useremail=useremail.data).first()
+        # if existing_user_name==TRUE, then the form raising the validation error like below
+        if existing_user_email:
+            raise ValidationError("The email already exists, please write a different email!")
 
 
 # create a signin form
@@ -168,7 +179,7 @@ def user_signup():
 
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        new_user = usercredentials(username=form.username.data, password=hashed_password)
+        new_user = usercredentials(username=form.username.data, useremail=form.useremail.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('user_signin'))

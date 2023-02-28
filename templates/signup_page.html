@@ -11,11 +11,15 @@
     <form method="post" action="">
         {{form.hidden_tag() }}
         {{form.username }}
+        {{form.useremail }}
         {{form.password }}
         {{form.submit }}
     </form>
     {% for error in form.username.errors %}
       <span style="color: red;">***{{ error }}***</span>
+    {% endfor %}
+    {% for error in form.useremail.errors %}
+      <div class="error-message">{{ error }}</div>
     {% endfor %}
     <p><a href="{{url_for('user_signin')}}">Already have account? please "sign in"</a></p>
 
