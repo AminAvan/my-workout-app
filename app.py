@@ -248,7 +248,8 @@ def user_fitness_program():
             sug_day[5] = 'Running for 30 miutes'
             sug_day[6] = 'Walk for 60 miutes'
             
-        exercise_message = f"""Dear {current_user.username};
+        exercise_message = f"""
+        Dear {current_user.username};
         your selection is \"{user_resp_to_fit_programs}\".
         Therefore, we recommend program named \"{sug_prog}\" for you and here it is:
         
@@ -262,7 +263,8 @@ def user_fitness_program():
         we will send a copy of this program to your email.
         
         Regards,
-        ExLive"""
+        ExLive
+        """
 
         flash (exercise_message, 'res_user_fitness_program')
 
@@ -273,7 +275,7 @@ def user_fitness_program():
 		data={"from": "mailgun@exlive.tech",
 			"to": [f"{current_user.useremail}"],
 			"subject": "ExLive: Your Recommended Workout Routine",
-			"text": f"your workout program is {sug_prog}"})
+			"text": exercise_message})
 
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
