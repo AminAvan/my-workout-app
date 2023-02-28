@@ -220,41 +220,20 @@ def user_bmi():
 def user_fitness_program():
     fit_programs=db.session.execute(text('select * from fitnessprograms order by excersiegoal'))
     if (request.method == 'POST'):
-        # mailtrap_port = 2525
-        # smtp_server = 'smtp.mailtrap.io'
-        # mailtrap_username = '06d66d657a1edc'
-        # mailtrap_password = 'd6369e5a3796c8'
-        # mailtrap_message = """
-        #                     Hi,
-        #                     Check out the new post on the Mailtrap blog:
-        #                     SMTP Server for Testing: Cloud-based or Local?
-        #                     https://blog.mailtrap.io/2018/09/27/cloud-or-local-smtp-server/
-        #                     Feel free to let us know what content would be useful for you!"""
-
-        # sender_email = '5ce439e0-0796-4eeb-a9d4-48bb377598d5@heroku.com'
-        # msg = MIMEText(mailtrap_message, "plain")
-        # msg['Subject'] = 'ExLive - Workout daily program'
-        # msg['From'] = sender_email
-
-
         user_resp_to_fit_programs = str(request.form['fitprgrms'])
         sug_prog = str(db.session.execute(text(f"SELECT programname FROM fitnessprograms WHERE excersiegoal = '{user_resp_to_fit_programs}'")).scalar())
-        #user_email = request.form['email']
 
-        # receiver_email = user_email
-        # msg['To'] = receiver_email
-
-        flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". Therefore, we recommend program named \"{sug_prog}\" for you and will send it to {current_user.useremail}."), 'res_user_fitness_program')
+        flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". Therefore, we recommend program named \"{sug_prog}\" for you and will send it to your email."), 'res_user_fitness_program')
         print(sug_prog)
 
         ## send email
-        # requests.post(
-		# "https://api.mailgun.net/v3/exlive.tech/messages",
-		# auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
-		# data={"from": "mailgun@exlive.tech",
-		# 	"to": [f"{user_email}"],
-		# 	"subject": "heroku",
-		# 	"text": f"your workout program is {sug_prog}"})
+        requests.post(
+		"https://api.mailgun.net/v3/exlive.tech/messages",
+		auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
+		data={"from": "mailgun@exlive.tech",
+			"to": [f"{current_user.useremail}"],
+			"subject": "ExLive: Your Recommended Workout Routine",
+			"text": f"your workout program is {sug_prog}"})
 
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
