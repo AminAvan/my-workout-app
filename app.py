@@ -68,14 +68,7 @@ bcrypt = Bcrypt(app)
 # I just write a simple sentence here
 app.config['SECRET_KEY'] = 'secretkeyvalue'
 # initialize our mail, we give "app" to "Mail" class as an argument
-# app.config['MAIL_SERVER']='smtp.mailtrap.io'
-# app.config['MAIL_PORT'] = 2525
-# app.config['MAIL_USERNAME'] = '06d66d657a1edc'
-# app.config['MAIL_PASSWORD'] = 'd6369e5a3796c8'
-# app.config['MAIL_USE_TLS'] = True
-# app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
-
 
 
 # allow web_server and FLASK to work together to handle user when signin
@@ -251,7 +244,7 @@ def user_fitness_program():
         # receiver_email = user_email
         # msg['To'] = receiver_email
 
-        flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". Therefore, we recommend program named \"{sug_prog}\" for you and will send it to your email."), 'res_user_fitness_program')
+        flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". Therefore, we recommend program named \"{sug_prog}\" for you and will send it to {current_user.useremail}."), 'res_user_fitness_program')
         print(sug_prog)
 
         ## send email
