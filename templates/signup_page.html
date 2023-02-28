@@ -19,7 +19,7 @@
       <span style="color: red;">***{{ error }}***</span>
     {% endfor %}
     {% for error in form.useremail.errors %}
-      <div class="error-message">{{ error }}</div>
+      <div class="error-message" style="color: red;">***{{ error }}***</div>
     {% endfor %}
     <p><a href="{{url_for('user_signin')}}">Already have account? please "sign in"</a></p>
 
