@@ -251,6 +251,7 @@ def user_fitness_program():
         exercise_message = f"""Dear {current_user.username};
         your selection is \"{user_resp_to_fit_programs}\".
         Therefore, we recommend program named \"{sug_prog}\" for you and here it is:
+        
         Monday => \"{sug_day[0]}\".
         Tuesday => \"{sug_day[1]}\".
         Wednesday => \"{sug_day[2]}\".
@@ -258,7 +259,10 @@ def user_fitness_program():
         Friday => \"{sug_day[4]}\".
         Saturday => \"{sug_day[5]}\".
         Sunday => \"{sug_day[6]}\".
-        will send it to your email."""
+        we will send a copy of this program to your email.
+        
+        Regards,
+        ExLive"""
 
         flash (exercise_message, 'res_user_fitness_program')
 
