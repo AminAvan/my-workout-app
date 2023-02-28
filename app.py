@@ -223,7 +223,7 @@ def user_fitness_program():
         user_resp_to_fit_programs = str(request.form['fitprgrms'])
         sug_prog = str(db.session.execute(text(f"SELECT programname FROM fitnessprograms WHERE excersiegoal = '{user_resp_to_fit_programs}'")).scalar())
 
-        flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". <br/>Therefore, we recommend program named \"{sug_prog}\" for you and will send it to your email."), 'res_user_fitness_program')
+        flash ((f"Dear {current_user.username}; your selection is \"{user_resp_to_fit_programs}\". {'<br>'}Therefore, we recommend program named \"{sug_prog}\" for you and will send it to your email."), 'res_user_fitness_program')
         print(sug_prog)
 
         ## send email
