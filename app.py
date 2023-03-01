@@ -22,29 +22,6 @@ import smtplib
 from email.mime.text import MIMEText
 import requests
 
-# locally we have a local development server running, but when we want to run our app on "Heroku" we need a professional webserver to run.
-# Therefore, we install "gunicorn" -> pip install gunicorn
-# In addition, although we use "sqlite3" locally, we need to install "PostgreSQL" when we want to deploy the app on the "Heroku".
-# Therefore, to install "PostgreSQL" -> "pip install psycopg2"
-# Moreover, Heroku has no idea about what modules we used in our app. Therefore, we "pip freeze" to see what python modules we have locally.
-# Then, we need to put those modules names to a text file to notice the Heroku that which python-modules we use.
-# As a result, we put all these python-modules in a text-file with "pip freeze > requirement.txt"
-# Further, we need a "procfile", which tells Heroku that what kind of app is runing (i.e., a web app), so to do that we need to 
-# write "echo web: gunicorn app:app > procfile" in terminal, then it produce a file named "procfile"
-# In addition, I need to push my code to the Github and then from github push them to Heroku. Therefore, the first step is to push the code to the github.
-# So, after creating a repsitory on github with a name, copy the "https://github.com/AminAvan/my-workout-app.git" repo.
-# Next, write "git remote add origin https://github.com/AminAvan/my-workout-app.git" in the terminal.
-# next, to check the repo is added correctly we use "git remote -v"
-# next, write "git push origin master" in the terminal to push the code
-# in addition, we create an app on heroku with "heroku create exlive" --> our app-name is exlive
-# in addition, to apply changes on files on github we need to -> "git add -A" -> "git commit -m "comments"" --> "git push origin master"
-# in addition, before pushing the code of program we need to define the database of the app on heroku.
-# so we want a postgres, let's install it on heroku and apply changes to our code "app"
-# to install "postgres", "heroku addons:create heroku-postgresql:mini --app app_name" (app_name: exlive) in terminal , mini cost 5$ 
-# that is pay with the student-plan of heroku. Therefore, we need to have the url of the database to plugin it to our code.
-# to get the url of database, write "heroku config --app exlive" in terminal, then copy the "DATABASE_URL"
-# in addition, connect to the database, psql --host=ec2-18-214-134-226.compute-1.amazonaws.com --port=5432 --username=tcwgureblapxwo --password --dbname=d2325b3q1sbvjl
-# based on the information of sql in heroku
 
 # Get the port number from the environment(e.g., heroku) variable, or use a default value
 port = int(os.environ.get('PORT', 5000))
@@ -54,19 +31,23 @@ port = int(os.environ.get('PORT', 5000))
 
 # create a web instance
 app = Flask(__name__)
+
 # we need to connect our app file "db = SQLAlchemy(app)" to the file "database.db"
 # we need to connect our app to postgres database as we want to deploy app on heroku
 # therefore, "postgres://tcwgureblapxwo:6b845ecaf0926b7929062c0ecf602ae16a5d74b8a390c150bdea759a341ea81d@ec2-18-214-134-226.compute-1.amazonaws.com:5432/d2325b3q1sbvjl"
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' change to
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://tcwgureblapxwo:6b845ecaf0926b7929062c0ecf602ae16a5d74b8a390c150bdea759a341ea81d@ec2-18-214-134-226.compute-1.amazonaws.com:5432/d2325b3q1sbvjl'
+
 # create a database instance
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+
 # to solve creating the tables we need to 
 # from app import app, db -> app.app_context().push() -> db.create_all() in our python environment
 # we need to build a secret_key to have a secure session cookie, in a production environment this should be a secret, but for simplicty in here
 # I just write a simple sentence here
 app.config['SECRET_KEY'] = 'secretkeyvalue'
+
 # initialize our mail, we give "app" to "Mail" class as an argument
 mail = Mail(app)
 
@@ -125,17 +106,13 @@ class LoginForm(FlaskForm):
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder":"Password"})
     submit = SubmitField("Login")
 
-# # create form for receiving the execise program via emails of users
-# class RecEmailForm(FlaskForm):
-#     #user_email = StringField('Email', [validators.DataRequired(), validators.Email()])
-#     user_email = StringField("Email", validators=[InputRequired(), Email()])
-    
 
 # create a calculating BMI form
 class BMIForm(FlaskForm):
     user_weight = IntegerField(validators=[InputRequired()], render_kw={"placeholder":"Weight"})
     user_height = IntegerField(validators=[InputRequired()], render_kw={"placeholder":"Height"})
     claculate_user_bmi = SubmitField("Calculate")
+
 
 # home page's URL
 @app.route('/')
@@ -164,6 +141,7 @@ def user_signin():
 
     return render_template('signin_page.html', form=form)
 
+
 # Sign up's URL()
 @app.route('/signup', methods=['GET','POST'])
 def user_signup():
@@ -178,6 +156,7 @@ def user_signup():
         return redirect(url_for('user_signin'))
 
     return render_template('signup_page.html', form=form)
+
 
 # Dashboard's URL()
 @app.route('/dashboard', methods=['GET','POST'])
@@ -269,7 +248,7 @@ def user_fitness_program():
 
         flash (exercise_message, 'res_user_fitness_program')
 
-        ## send email
+        ## send email via API of MailGun
         requests.post(
 		"https://api.mailgun.net/v3/exlive.tech/messages",
 		auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
@@ -277,7 +256,6 @@ def user_fitness_program():
 			"to": [f"{current_user.useremail}"],
 			"subject": "ExLive: Your Recommended Workout Routine",
 			"text": exercise_message})
-
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
 
