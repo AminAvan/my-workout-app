@@ -251,7 +251,7 @@ def user_fitness_program():
             flash (exercise_message, 'res_user_fitness_program')
             flash (Markup("""<body><form action="/fitnessprogram" method="POST" id="form2">email?<input type="submit" name="submit_email_button" value="email"></form></body>"""), 'res_user_fitness_program')
         ## send email via API of MailGun         
-        if 'submit_button' in request.form:
+        if 'submit_email_button' in request.form:
             requests.post(
             "https://api.mailgun.net/v3/exlive.tech/messages",
             auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
