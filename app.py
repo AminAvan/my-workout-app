@@ -199,63 +199,64 @@ def user_bmi():
 def user_fitness_program():
     fit_programs=db.session.execute(text('select * from fitnessprograms order by excersiegoal'))
     if (request.method == 'POST'):
-        sug_day = [''] * 7 # for determining the user per day exercise _ for a week
-        user_resp_to_fit_programs = str(request.form['fitprgrms'])
-        sug_prog = str(db.session.execute(text(f"SELECT programname FROM fitnessprograms WHERE excersiegoal = '{user_resp_to_fit_programs}'")).scalar())
-        if (sug_prog == 'Walk'):
-            sug_day[0] = 'Swimming or walk'
-            sug_day[1] = 'play basketball or walk'
-            sug_day[2] = 'play Volleyball or walk'
-            sug_day[3] = 'play Football or walk'
-            sug_day[4] = 'Swimming or walk'
-            sug_day[5] = 'Yoga or walk'
-            sug_day[6] = 'Pilates or walk'
-        elif (sug_prog == 'Full Body'):
-            sug_day[0] = 'Chest workouts'
-            sug_day[1] = 'Leg workouts'
-            sug_day[2] = 'Shoulder workouts'
-            sug_day[3] = 'Biceps workouts'
-            sug_day[4] = 'Triceps workouts'
-            sug_day[5] = 'UpperBody workouts'
-            sug_day[6] = 'LowerBody workouts'
-        elif (sug_prog == 'Run'):
-            sug_day[0] = 'Jogging for 45 miutes'
-            sug_day[1] = 'Running for 30 miutes'
-            sug_day[2] = 'Jogging for 45 miutes'
-            sug_day[3] = 'Running for 30 miutes'
-            sug_day[4] = 'Jogging for 45 miutes'
-            sug_day[5] = 'Running for 30 miutes'
-            sug_day[6] = 'Walk for 60 miutes'
+        if 'submit_button' in request.form:
+            sug_day = [''] * 7 # for determining the user per day exercise _ for a week
+            user_resp_to_fit_programs = str(request.form['fitprgrms'])
+            sug_prog = str(db.session.execute(text(f"SELECT programname FROM fitnessprograms WHERE excersiegoal = '{user_resp_to_fit_programs}'")).scalar())
+            if (sug_prog == 'Walk'):
+                sug_day[0] = 'Swimming or walk'
+                sug_day[1] = 'play basketball or walk'
+                sug_day[2] = 'play Volleyball or walk'
+                sug_day[3] = 'play Football or walk'
+                sug_day[4] = 'Swimming or walk'
+                sug_day[5] = 'Yoga or walk'
+                sug_day[6] = 'Pilates or walk'
+            elif (sug_prog == 'Full Body'):
+                sug_day[0] = 'Chest workouts'
+                sug_day[1] = 'Leg workouts'
+                sug_day[2] = 'Shoulder workouts'
+                sug_day[3] = 'Biceps workouts'
+                sug_day[4] = 'Triceps workouts'
+                sug_day[5] = 'UpperBody workouts'
+                sug_day[6] = 'LowerBody workouts'
+            elif (sug_prog == 'Run'):
+                sug_day[0] = 'Jogging for 45 miutes'
+                sug_day[1] = 'Running for 30 miutes'
+                sug_day[2] = 'Jogging for 45 miutes'
+                sug_day[3] = 'Running for 30 miutes'
+                sug_day[4] = 'Jogging for 45 miutes'
+                sug_day[5] = 'Running for 30 miutes'
+                sug_day[6] = 'Walk for 60 miutes'
+                
+            exercise_message = f"""
+            Dear {current_user.username};
+            your selection is \"{user_resp_to_fit_programs}\".
+            Therefore, we recommend program named \"{sug_prog}\" for you and here it is:
             
-        exercise_message = f"""
-        Dear {current_user.username};
-        your selection is \"{user_resp_to_fit_programs}\".
-        Therefore, we recommend program named \"{sug_prog}\" for you and here it is:
-        
-        Monday => \"{sug_day[0]}\".
-        Tuesday => \"{sug_day[1]}\".
-        Wednesday => \"{sug_day[2]}\".
-        Thursday => \"{sug_day[3]}\".
-        Friday => \"{sug_day[4]}\".
-        Saturday => \"{sug_day[5]}\".
-        Sunday => \"{sug_day[6]}\".
-        
-        We will send a copy of this program to your email.
-        
-        Regards,
-        ExLive
-        """
+            Monday => \"{sug_day[0]}\".
+            Tuesday => \"{sug_day[1]}\".
+            Wednesday => \"{sug_day[2]}\".
+            Thursday => \"{sug_day[3]}\".
+            Friday => \"{sug_day[4]}\".
+            Saturday => \"{sug_day[5]}\".
+            Sunday => \"{sug_day[6]}\".
+            
+            We will send a copy of this program to your email.
+            
+            Regards,
+            ExLive
+            """
 
-        flash (exercise_message, 'res_user_fitness_program')
+            flash (exercise_message, 'res_user_fitness_program')
 
-        ## send email via API of MailGun
-        requests.post(
-		"https://api.mailgun.net/v3/exlive.tech/messages",
-		auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
-		data={"from": "mailgun@exlive.tech",
-			"to": [f"{current_user.useremail}"],
-			"subject": "ExLive: Your Recommended Workout Routine",
-			"text": exercise_message})
+            ## send email via API of MailGun
+            requests.post(
+            "https://api.mailgun.net/v3/exlive.tech/messages",
+            auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
+            data={"from": "mailgun@exlive.tech",
+                "to": [f"{current_user.useremail}"],
+                "subject": "ExLive: Your Recommended Workout Routine",
+                "text": exercise_message})
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
 
