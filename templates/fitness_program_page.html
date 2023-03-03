@@ -9,6 +9,15 @@
             margin-right: 15px;
         }
     </style>
+    <script>
+        function showSecondSubmitButton() {
+          // Get a reference to the second submit button
+          var secondSubmitButton = document.getElementById("second-submit-button");
+    
+          // Set the display style to "block" to show the button
+          secondSubmitButton.style.display = "block";
+        }
+      </script>
 </head>
 
 
@@ -30,7 +39,8 @@
             <option value="{{g.excersiegoal}}">{{g.excersiegoal}}</option>
             {% endfor %}
         </select>
-        <input type="submit" name="submit_button" value="Submit">
+        <input type="submit" name="submit_button" value="Submit" onclick="showSecondSubmitButton()">
+        <input type="submit" id="second-submit-button" name="submit2" value="Submit 2" style="display: none;">
     </form>
     {% with messages = get_flashed_messages(with_categories=true, category_filter='res_user_fitness_program') %}
         {% for category, message in messages %}
