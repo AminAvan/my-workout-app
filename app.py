@@ -21,6 +21,7 @@ from mpmath import *
 import smtplib
 from email.mime.text import MIMEText
 import requests
+import time
 
 
 # Get the port number from the environment(e.g., heroku) variable, or use a default value
@@ -249,6 +250,8 @@ def user_fitness_program():
 
             flash (exercise_message, 'res_user_fitness_program')
 
+            while 'submit1' not in request.args:
+                time.sleep(1)
             ## send email via API of MailGun
             requests.post(
             "https://api.mailgun.net/v3/exlive.tech/messages",
