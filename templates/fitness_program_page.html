@@ -22,7 +22,7 @@
         To receive the workout program, please answer the following question about your exercise goal and then write an email requesting the program.
     </p>
     
-    <form action="/fitnessprogram" method="POST">
+    <form action="/fitnessprogram" method="POST" id="form1" onsubmit="return submitForm1()">
         What is your exercise goal?
         <select name= fitprgrms>
             <option selected disabled>My goal is ...</option>
@@ -40,7 +40,10 @@
         {% endwith %}
     </form>
     <br>
-    
+    <form id="form2" style="display:none;">
+        <!-- second form fields here -->
+        <input type="submit" value="Submit">
+      </form>
     <a href="{{url_for('user_dashboard')}}">
         Dashboard
         <img src="/static/images/dashboard.png" alt="Example Image" width="35" height="35" style="display: inline-block;">
@@ -57,5 +60,17 @@
         Sign Out
         <img src="/static/images/signout.png" alt="Example Image" width="35" height="35" style="display: inline-block;">
     </a>
+    <script>
+        function submitForm1() {
+          // Code to submit the first form
+          // ...
+    
+          // Show the second form
+          document.getElementById("form2").style.display = "block";
+    
+          // Prevent the page from reloading
+          return false;
+        }
+      </script>
 </body>
 </html>
