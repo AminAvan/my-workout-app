@@ -15,13 +15,13 @@
         }
       </style>
     <script>
-        function showSecondSubmitButton() {
-          // Get a reference to the second submit button
-          var secondSubmitButton = document.getElementById("second-submit-button");
-    
-          // Set the display style to "inline-block" to show the button
-          secondSubmitButton.style.display = "inline-block";
-        }
+        function addBtn(){
+            document.getElementById('btnHolder').innerHTML = '<input type="button" onClick="javascript:removeBtn();" value="click" />';
+            }
+
+        function removeBtn(){
+            document.getElementById('btnHolder').innerHTML = '';
+            }
       </script>
 </head>
 
@@ -44,8 +44,13 @@
             <option value="{{g.excersiegoal}}">{{g.excersiegoal}}</option>
             {% endfor %}
         </select>
-        <input type="submit" name="submit_button" value="Submit" onclick="showSecondSubmitButton()">
-        <input type="submit" id="second-submit-button" name="submit2" value="Submit 2">
+
+        <div id="btnOne">
+            <input type="button" name="submit_button" onClick="javascript:addBtn();" value="Submit" /></div>
+        <div id="btnHolder"></div>
+
+        <!-- <input type="submit" name="submit_button" value="Submit" onclick="showSecondSubmitButton()">
+        <input type="submit" id="second-submit-button" name="submit2" value="Submit 2"> -->
         <!-- {% with messages = get_flashed_messages(with_categories=true, category_filter='res_user_fitness_program') %}
             {% for category, message in messages %}
                 <pre style="color: green; background-color: lightyellow; border: 1px solid greenyellow; padding: 5px; font-size: 14px;">{{ message }}</pre>
