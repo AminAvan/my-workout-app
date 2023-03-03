@@ -34,7 +34,7 @@
         To receive the workout program, please answer the following question about your exercise goal and then write an email requesting the program.
     </p>
     
-    <form action="/fitnessprogram" method="POST" id="form1" onsubmit="return user_fitness_program(); return submitForm1();">
+    <form action="/fitnessprogram" method="POST" id="form1" onsubmit="return(user_fitness_program(),submitForm1());">
         What is your exercise goal?
         <select name= fitprgrms>
             <option selected disabled>My goal is ...</option>
