@@ -251,7 +251,7 @@ def user_fitness_program():
 
             flash (exercise_message, 'res_user_fitness_program')
             # flash (Markup("""<body><form action="/fitnessprogram" method="POST" id="form2">Do you want to receive a copy of the program into your email?<input type="submit" name="submit_email_button" value="Yes"></form></body>"""), 'res_user_fitness_program')
-            flash (Markup("""<body><form action="/fitnessprogram" method="POST" id="form2">Do you want to receive a copy of the program into your email?<input type="radio" id="yes" name="submit_email_res" value="yes" required><label for="yes">Yes</label><br><input type="radio" id="no" name="submit_email_res" value="no" required><label for="no">No</label><br><input type="submit" name="submit_email_button" value="email"></form></body>"""), 'res_user_fitness_program')
+            flash (Markup("""<body><form action="/fitnessprogram" method="POST" id="form2">Do you want to receive a copy of the program into your email?<br><input type="radio" id="yes" name="submit_email_res" value="yes" required><label for="yes">Yes</label><br><input type="radio" id="no" name="submit_email_res" value="no" required><label for="no">No</label><br><input type="submit" name="submit_email_button" value="Respond"></form></body>"""), 'res_user_fitness_program')
         
         ## send email via API of MailGun         
         if 'submit_email_button' in request.form:
