@@ -253,10 +253,11 @@ def user_fitness_program():
                  
 
             ## send email via API of MailGun
-            requests.post(
-            "https://api.mailgun.net/v3/exlive.tech/messages",
-            auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
-            data={"from": "mailgun@exlive.tech",
+            if 'submit_email_button' in request.form:
+                requests.post(
+                "https://api.mailgun.net/v3/exlive.tech/messages",
+                auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
+                data={"from": "mailgun@exlive.tech",
                 "to": [f"{current_user.useremail}"],
                 "subject": "ExLive: Your Recommended Workout Routine",
                 "text": exercise_message})
