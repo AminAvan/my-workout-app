@@ -249,7 +249,7 @@ def user_fitness_program():
             """
 
             flash (exercise_message, 'res_user_fitness_program')
-            flash (Markup("<h1>Voila! Platform is ready to used</h1>"), 'res_user_fitness_program')
+            flash (Markup("""<body><form action="/fitnessprogram" method="POST" id="form2">email?<input type="submit" name="submit_email_button" value="email"></form></body>"""), 'res_user_fitness_program')
                  
 
             ## send email via API of MailGun
