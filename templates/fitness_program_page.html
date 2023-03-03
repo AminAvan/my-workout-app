@@ -32,13 +32,13 @@
         </select>
         <input type="submit" name="submit_button" value="Submit">
     </form>
-    <!-- {% with messages = get_flashed_messages(with_categories=true, category_filter='res_user_fitness_program') %}
+    {% with messages = get_flashed_messages(with_categories=true, category_filter='res_user_fitness_program') %}
         {% for category, message in messages %}
             <pre style="color: green; background-color: lightyellow; border: 1px solid greenyellow; padding: 5px; font-size: 14px;">{{ message }}</pre>
         {% endfor %}
-    {% endwith %} -->
+    {% endwith %}
     <br>
-    
+
     <a href="{{url_for('user_dashboard')}}">
         Dashboard
         <img src="/static/images/dashboard.png" alt="Example Image" width="35" height="35" style="display: inline-block;">
