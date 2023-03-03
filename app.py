@@ -251,12 +251,12 @@ def user_fitness_program():
 
             flash (exercise_message, 'res_user_fitness_program')
             # flash (Markup("""<body><form action="/fitnessprogram" method="POST" id="form2">Do you want to receive a copy of the program into your email?<input type="submit" name="submit_email_button" value="Yes"></form></body>"""), 'res_user_fitness_program')
-            flash (Markup("""<body><form action="/fitnessprogram" method="POST" id="form2">Do you want to receive a copy of the program into your email?<input type="radio" id="yes" name="submit_email_button" value="yes" required><label for="yes">Yes</label><br><input type="radio" id="no" name="submit_email_button" value="no" required><label for="no">No</label><br><input type="submit" value="Submit"></form></body>"""), 'res_user_fitness_program')
+            flash (Markup("""<body><form action="/fitnessprogram" method="POST" id="form2">Do you want to receive a copy of the program into your email?<input type="radio" id="yes" name="submit_email_res" value="yes" required><label for="yes">Yes</label><br><input type="radio" id="no" name="submit_email_res" value="no" required><label for="no">No</label><br><input type="submit" name="submit_email_button" value="email"></form></body>"""), 'res_user_fitness_program')
         
         ## send email via API of MailGun         
         if 'submit_email_button' in request.form:
-            submit_email_button = request.form['submit_email_button']
-            if submit_email_button == 'yes':
+            submit_email_res = request.form['submit_email_res']
+            if submit_email_res == 'yes':
                 requests.post(
                     "https://api.mailgun.net/v3/exlive.tech/messages",
                     auth=("api", "key-cf54e2dde70cc6411a7b3abbf8400eea"),
@@ -264,7 +264,7 @@ def user_fitness_program():
                     "to": [f"{current_user.useremail}"],
                     "subject": "ExLive: Your Recommended Workout Routine",
                     "text": exercise_message})
-            elif submit_email_button == 'no':
+            elif submit_email_res == 'no':
                 return render_template('fitness_program_page.html', fit_programs=fit_programs)
             
 
