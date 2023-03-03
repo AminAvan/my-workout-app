@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, url_for, redirect, request, make_response
+from flask import Flask, flash, render_template, url_for, redirect, request, Markup
 import os
 # we use sql for our application with SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
@@ -249,6 +249,8 @@ def user_fitness_program():
             """
 
             flash (exercise_message, 'res_user_fitness_program')
+            flash (Markup("<h1>Voila! Platform is ready to used</h1>"), 'res_user_fitness_program')
+                 
 
             ## send email via API of MailGun
             requests.post(
