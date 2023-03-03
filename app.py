@@ -260,7 +260,7 @@ def user_fitness_program():
             data={"from": "mailgun@exlive.tech",
             "to": [f"{current_user.useremail}"],
             "subject": "ExLive: Your Recommended Workout Routine",
-            "text": "hi"})
+            "text": "exercise_message"})
 
     return render_template('fitness_program_page.html', fit_programs=fit_programs)
 
