@@ -22,7 +22,7 @@
         To receive the workout program, please answer the following question about your exercise goal and then write an email requesting the program.
     </p>
     
-    <form action="/fitnessprogram" method="POST" id="form1" onsubmit="return submitForm1()">
+    <form action="/fitnessprogram" method="POST">
         What is your exercise goal?
         <select name= fitprgrms>
             <option selected disabled>My goal is ...</option>
@@ -30,20 +30,15 @@
             <option value="{{g.excersiegoal}}">{{g.excersiegoal}}</option>
             {% endfor %}
         </select>
-
         <input type="submit" name="submit_button" value="Submit">
-        <!-- <input type="submit" id="second-submit-button" name="submit2" value="Submit 2"> -->
-        {% with messages = get_flashed_messages(with_categories=true, category_filter='res_user_fitness_program') %}
-            {% for category, message in messages %}
-                <pre style="color: green; background-color: lightyellow; border: 1px solid greenyellow; padding: 5px; font-size: 14px;">{{ message }}</pre>
-            {% endfor %}
-        {% endwith %}
     </form>
+    {% with messages = get_flashed_messages(with_categories=true, category_filter='res_user_fitness_program') %}
+        {% for category, message in messages %}
+            <pre style="color: green; background-color: lightyellow; border: 1px solid greenyellow; padding: 5px; font-size: 14px;">{{ message }}</pre>
+        {% endfor %}
+    {% endwith %}
     <br>
-    <form id="form2" style="display:none;">
-        <!-- second form fields here -->
-        <input type="submit" value="Submit2" name="submit2">
-      </form>
+    
     <a href="{{url_for('user_dashboard')}}">
         Dashboard
         <img src="/static/images/dashboard.png" alt="Example Image" width="35" height="35" style="display: inline-block;">
@@ -60,17 +55,5 @@
         Sign Out
         <img src="/static/images/signout.png" alt="Example Image" width="35" height="35" style="display: inline-block;">
     </a>
-    <script>
-        function submitForm1() {
-          // Code to submit the first form
-          // ...
-    
-          // Show the second form
-          document.getElementById("form2").style.display = "block";
-    
-          // Prevent the page from reloading
-          return false;
-        }
-      </script>
 </body>
 </html>
