@@ -250,8 +250,6 @@ def user_fitness_program():
 
             flash (exercise_message, 'res_user_fitness_program')
 
-            while 'submit1' not in request.args:
-                time.sleep(1)
             ## send email via API of MailGun
             requests.post(
             "https://api.mailgun.net/v3/exlive.tech/messages",
