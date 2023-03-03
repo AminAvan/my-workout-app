@@ -198,9 +198,9 @@ def user_bmi():
 # user only can see the programs if he/she signed-in
 @login_required
 def user_fitness_program():
+    global exercise_message
     fit_programs=db.session.execute(text('select * from fitnessprograms order by excersiegoal'))
     if (request.method == 'POST'):
-        global exercise_message
         if 'submit_button' in request.form:
             sug_day = [''] * 7 # for determining the user per day exercise _ for a week
             user_resp_to_fit_programs = str(request.form['fitprgrms'])
