@@ -110,8 +110,8 @@ class LoginForm(FlaskForm):
 
 # create a calculating BMI form
 class BMIForm(FlaskForm):
-    user_weight = IntegerField(validators=[InputRequired()], render_kw={"placeholder":"Weight"})
-    user_height = IntegerField(validators=[InputRequired()], render_kw={"placeholder":"Height"})
+    user_weight = IntegerField(validators=[InputRequired()], render_kw={"placeholder":"Weight (kg)"})
+    user_height = IntegerField(validators=[InputRequired()], render_kw={"placeholder":"Height (cm)"})
     claculate_user_bmi = SubmitField("Calculate")
 
 
